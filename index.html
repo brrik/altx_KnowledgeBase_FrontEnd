@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="header">
+        <p>header</p>
+        <button onclick="showOverlay(0)">新規投稿</button>
+    </div>
+    <div class="overlay">
+        <div class="overlay_items" id="new_thread">
+            <h2>ナレッジの新規投稿</h2>
+            <form class="form-container">
+                <div class="form-group">
+                <label for="userName">投稿者</label>
+                <input type="text" id="userName" name="userName" placeholder="大西 翔大">
+                </div>
+
+                <div class="form-group">
+                <label for="inputData">本文</label>
+                <textarea id="inputData" name="inputData" placeholder="ナレッジベース"></textarea>
+                </div>
+
+                <div class="form-group">
+                <label>タグ（任意で最大3つ）</label>
+                <div class="tag-group">
+                    <input type="text" name="tag1" placeholder="タグ1">
+                    <input type="text" name="tag2" placeholder="タグ2">
+                    <input type="text" name="tag3" placeholder="タグ3">
+                </div>
+                </div>
+
+                <button type="submit">送信</button>
+                <button onclick="hideOverlay()">キャンセル</button>
+            </form>
+        </div>
+    </div>
+    <div class="overlay">
+        <div class="overlay_items">
+            <h2>削除依頼</h2>
+            <p>以下の内容に削除依頼をしますか？</p>
+            <p id="delItemField"></p>
+            <div>
+                <label for="delReq">削除依頼理由（必須）</label>
+                <textarea name="delReq" id="delReqReason" placeholder="削除依頼理由"></textarea>
+            </div>
+            <button onclick="hideOverlay()">削除依頼をする</button>
+            <button onclick="hideOverlay()">キャンセル</button>
+        </div>
+    </div>
+    <div class="overlay">
+        <div class="overlay_items">
+            <p>overlay3</p>
+            <button onclick="hideOverlay()">オーバーレイを隠す</button>
+        </div>
+    </div>
+    <div class="main">
+        <table id="mainTable">
+            <tr>
+                <th>ナレッジID</th>
+                <th>ナレッジベース：内容</th>
+                <th>投稿者</th>
+                <th>タグ1</th>
+                <th>タグ2</th>
+                <th>タグ3</th>
+                <th>削除依頼</th>
+            </tr>
+        </table>
+    </div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>

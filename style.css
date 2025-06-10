@@ -1,0 +1,119 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+textarea{
+    width: 80%;
+}
+
+.header{
+    position: fixed;
+    display: flex;
+    top: 0;
+    height:30px;
+    width: 100%;
+    background-color: aquamarine;
+}
+
+.header p{
+    margin: 0;
+    padding: 0 10px;
+    line-height: 30px;
+}
+
+.overlay{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 10vw;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.overlay_items{
+    display: block;
+    background-color: white;
+    width: 80vw;
+    height: 60vh;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.main{
+    padding-top: 30px;
+    background-color: white;
+    height: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"],
+textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #5b9bd5;
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.tag-group {
+    display: flex;
+    gap: 10px;
+}
+
+.tag-group input {
+    flex: 1;
+}
+
+.overlay_items button{
+    background-color: #5b9bd5;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.overlay_items button:hover {
+    background-color: #4a8ac6;
+}
+
+#mainTable{
+    width: 100vw;
+    border-collapse: collapse;
+}
+
+#mainTable tr{
+    height: 60px;
+}
+
+#mainTable td{
+    border-bottom:1px gray solid;
+}
