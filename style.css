@@ -5,6 +5,7 @@ body{
     background-color: slategrey;
 }
 
+
 textarea{
     width: 80%;
 }
@@ -133,4 +134,8 @@ textarea {
     width: 30%;
     height: 30%;
     border-radius: 10px;
+}
+
+#kn_detail_data p{
+    margin: 1px;
 }

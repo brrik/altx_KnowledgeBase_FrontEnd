@@ -14,7 +14,7 @@
     <div class="overlay">
         <div class="overlay_items" id="new_thread">
             <h2>ナレッジの新規投稿</h2>
-            <form class="form-container">
+            <form action="" method="post" class="form-container">
                 <div class="form-group">
                     <label for="userName">投稿者(必須)</label>
                     <input type="text" id="userName" name="userName" placeholder="大西 翔大" required>
@@ -44,6 +44,7 @@
         <div class="overlay_items">
             <h2>削除依頼</h2>
             <p>以下の内容に削除依頼をしますか？</p>
+            <p id="delItemID"></p>
             <p id="delItemField"></p>
             <div class="form-group">
                 <label for="delReq">削除依頼理由（必須）</label>
@@ -56,8 +57,31 @@
     <div class="overlay">
         <div class="overlay_items">
             <h2>ナレッジ詳細</h2>
-            <div id="kn_detail_data" class="form-group"></div>
-            
+            <div id="kn_detail_data" class="form-group">
+                <h3>タイトル：<span id="kn_detail_Title"></span></h3>
+                <p>ID：<span id="kn_detail_id"></span></p>
+                <p>投稿者：<span id="kn_detail_name"></span></p>
+                <p>内容：</p>
+                <p id="kn_detail_content"></p>
+                <div class="tag-group">
+                    <p>タグ1：<span id="kn_detail_tag1"></span></p>
+                    <p>タグ2：<span id="kn_detail_tag2"></span></p>
+                    <p>タグ3：<span id="kn_detail_tag3"></span></p>
+                </div>
+            </div>
+            <form action="" method="post" class="form-container">
+                <div class="form-group">
+                    <label for="comment_name">投稿者名</label>
+                    <input type="text" id="comment_name" placeholder="投稿者名">
+                </div>
+                <div class="form-group">
+                    <label for="comment">コメント</label>
+                    <textarea name="comment" id="comment" placeholder="コメント"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit">投稿</button>
+                </div>
+            </form>
             <button onclick="hideOverlay()">キャンセル</button>
         </div>
     </div>
