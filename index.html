@@ -16,22 +16,23 @@
             <h2>ナレッジの新規投稿</h2>
             <form class="form-container">
                 <div class="form-group">
-                <label for="userName">投稿者</label>
-                <input type="text" id="userName" name="userName" placeholder="大西 翔大">
+                    <label for="userName">投稿者(必須)</label>
+                    <input type="text" id="userName" name="userName" placeholder="大西 翔大" required>
+                    <label for="inputTitle">タイトル(必須)</label>
+                    <input type="text" id="inputTitle" name="inputTitle" placeholder="ナレッジタイトルを簡潔に" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputData">本文(必須)</label>
+                    <textarea id="inputData" name="inputData" placeholder="ナレッジベース" required></textarea>
                 </div>
 
                 <div class="form-group">
-                <label for="inputData">本文</label>
-                <textarea id="inputData" name="inputData" placeholder="ナレッジベース"></textarea>
-                </div>
-
-                <div class="form-group">
-                <label>タグ（任意で最大3つ）</label>
-                <div class="tag-group">
-                    <input type="text" name="tag1" placeholder="タグ1">
-                    <input type="text" name="tag2" placeholder="タグ2">
-                    <input type="text" name="tag3" placeholder="タグ3">
-                </div>
+                    <label>タグ（任意で最大3つ）</label>
+                    <div class="tag-group">
+                        <input type="text" name="tag1" placeholder="タグ1">
+                        <input type="text" name="tag2" placeholder="タグ2">
+                        <input type="text" name="tag3" placeholder="タグ3">
+                    </div>
                 </div>
 
                 <button type="submit">送信</button>
@@ -44,7 +45,7 @@
             <h2>削除依頼</h2>
             <p>以下の内容に削除依頼をしますか？</p>
             <p id="delItemField"></p>
-            <div>
+            <div class="form-group">
                 <label for="delReq">削除依頼理由（必須）</label>
                 <textarea name="delReq" id="delReqReason" placeholder="削除依頼理由"></textarea>
             </div>
@@ -54,22 +55,13 @@
     </div>
     <div class="overlay">
         <div class="overlay_items">
-            <p>overlay3</p>
-            <button onclick="hideOverlay()">オーバーレイを隠す</button>
+            <h2>ナレッジ詳細</h2>
+            <div id="kn_detail_data" class="form-group"></div>
+            
+            <button onclick="hideOverlay()">キャンセル</button>
         </div>
     </div>
-    <div class="main">
-        <table id="mainTable">
-            <tr>
-                <th>ナレッジID</th>
-                <th>ナレッジベース：内容</th>
-                <th>投稿者</th>
-                <th>タグ1</th>
-                <th>タグ2</th>
-                <th>タグ3</th>
-                <th>削除依頼</th>
-            </tr>
-        </table>
+    <div id="main">
     </div>
     
 

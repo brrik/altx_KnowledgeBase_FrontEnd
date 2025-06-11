@@ -13,37 +13,29 @@ function showOverlay(val){
 function DummyAddTable(){
     //ダミー処理
 
-    const mainTable = document.querySelector("#mainTable")
+    const mainTable = document.querySelector("#main")
     const now = new Date()
     for(let i=0; i<100; i++){
-        let newTR = document.createElement("tr");
-        let dataID = document.createElement("td")
-        let newData = document.createElement("td");
-        let newName = document.createElement("td");
-        let newTag1 = document.createElement("td");
-        let newTag2 = document.createElement("td");
-        let newTag3 = document.createElement("td");
-        let delReq = document.createElement("td");
+        let newDiv = document.createElement("div");
+        newDiv.setAttribute("onclick","testAlt()");
+        let dataID = document.createElement("p")
+        let newData = document.createElement("p");
+        let newName = document.createElement("p");
+        let delReq = document.createElement("button");
 
         dataID.innerText = i
         newData.innerText = "これはテストのナレッジです。" + now;
         newName.innerText = "大西 翔大";
-        newTag1.innerText = "経費申請";
-        newTag2.innerText = "出張経費";
-        newTag3.innerText = "仮払い申請"
-        delReq.innerHTML = `<button onclick="delItem(${i})">削除依頼</button>`
+        delReq.innerText = "削除依頼";
+        delReq.setAttribute("onclick", `delItem(${i})`)
+        newDiv.appendChild(dataID);
+        newDiv.appendChild(newData);
+        newDiv.appendChild(newName);
+        newDiv.appendChild(delReq);
 
-        newTR.appendChild(dataID);
-        newTR.appendChild(newData);
-        newTR.appendChild(newName);
-        newTR.appendChild(newTag1);
-        newTR.appendChild(newTag2);
-        newTR.appendChild(newTag3);
-        newTR.appendChild(delReq);
+        newDiv.setAttribute("class","knowledge_datas kn_frame")
 
-        newTR.setAttribute("class","knowledge_datas")
-
-        mainTable.appendChild(newTR)
+        mainTable.appendChild(newDiv)
     }
 }
 
@@ -51,10 +43,14 @@ function DummyAddTable(){
 function delItem(i){
     const datas = document.querySelectorAll(".knowledge_datas");
     const dataRow = datas[i]
-    const data = dataRow.querySelectorAll("td")[1]
+    const data = dataRow.querySelectorAll("p")[1]
     const delItemData = document.querySelector("#delItemField");
     delItemData.innerText = data.innerText;
     showOverlay(1)
 }
 
+
+function testAlt(){
+    alert("clicked");
+}
 DummyAddTable();

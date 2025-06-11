@@ -1,6 +1,8 @@
 body{
     margin: 0;
     padding: 0;
+    padding-top: 50px;
+    background-color: slategrey;
 }
 
 textarea{
@@ -29,22 +31,21 @@ textarea{
     left: 0;
     width: 100vw;
     height: 100vh;
-    padding: 10vw;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
 .overlay_items{
     display: block;
     background-color: white;
+    margin:auto;
     width: 80vw;
-    height: 60vh;
-    padding: 30px;
+    height: 80vh;
+    padding: 3%;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .main{
-    padding-top: 30px;
     background-color: white;
     height: 100%;
 }
@@ -83,6 +84,7 @@ textarea {
 
 .tag-group {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
@@ -116,4 +118,19 @@ textarea {
 
 #mainTable td{
     border-bottom:1px gray solid;
+}
+
+#main{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.kn_frame{
+    display: block;
+    margin: 10px;
+    padding: 10px;
+    background-color: aliceblue;
+    width: 30%;
+    height: 30%;
+    border-radius: 10px;
 }
