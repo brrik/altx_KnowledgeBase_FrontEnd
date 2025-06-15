@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>AltXナレッジベース</title>
 </head>
 <body>
     <div class="header">
-        <p>header</p>
+        <p>AltXナレッジベース</p>
         <button onclick="showOverlay(0)">新規投稿</button>
     </div>
     <div class="overlay">
@@ -64,9 +64,9 @@
                 <p>内容：</p>
                 <p id="kn_detail_content"></p>
                 <div class="tag-group">
-                    <p>タグ1：<span id="kn_detail_tag1"></span></p>
-                    <p>タグ2：<span id="kn_detail_tag2"></span></p>
-                    <p>タグ3：<span id="kn_detail_tag3"></span></p>
+                    <p><span id="kn_detail_tag1"></span></p>
+                    <p><span id="kn_detail_tag2"></span></p>
+                    <p><span id="kn_detail_tag3"></span></p>
                 </div>
             </div>
             <form action="" method="post" class="form-container">
@@ -82,6 +82,9 @@
                     <button type="submit">投稿</button>
                 </div>
             </form>
+            <div id="comment_form">
+
+            </div>
             <button onclick="hideOverlay()">キャンセル</button>
         </div>
     </div>

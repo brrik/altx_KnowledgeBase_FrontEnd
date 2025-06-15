@@ -94,6 +94,47 @@ const dummyData = `{
   ]
 }`;
 
+const comments = `{
+  "101": [
+    { "commentId": "CM001", "user": "alice", "comment": "とても分かりやすかったです！" },
+    { "commentId": "CM002", "user": "bob", "comment": "イベントバブリング、ずっと混乱してたので助かりました。" }
+  ],
+  "234": [
+    { "commentId": "CM003", "user": "charlie", "comment": "実務で rebase を使うのが怖かったけど、これなら試せそう。" },
+    { "commentId": "CM004", "user": "diana", "comment": "チームで共有したい内容ですね。" }
+  ],
+  "387": [
+    { "commentId": "CM005", "user": "emma", "comment": "Python初心者におすすめの記事！" },
+    { "commentId": "CM006", "user": "frank", "comment": "内包表記の例がシンプルで良いと思いました。" }
+  ],
+  "412": [
+    { "commentId": "CM007", "user": "george", "comment": "submitの動作、つまずいてたので助かりました。" },
+    { "commentId": "CM008", "user": "hana", "comment": "HTMLとJavaScriptの連携がもっと知りたい。" }
+  ],
+  "526": [
+    { "commentId": "CM009", "user": "isaac", "comment": "Flexbox中央揃え、毎回調べてるので保存しました。" }
+  ],
+  "603": [
+    { "commentId": "CM010", "user": "julia", "comment": "全部入れてる拡張機能でした。安心。" },
+    { "commentId": "CM011", "user": "ken", "comment": "GitLens、知らなかったので入れてみます。" }
+  ],
+  "718": [
+    { "commentId": "CM012", "user": "lisa", "comment": "SQLのWHERE句は頻出ですね。" },
+    { "commentId": "CM013", "user": "mark", "comment": "他にもJOINの説明が欲しいです。" }
+  ],
+  "845": [
+    { "commentId": "CM014", "user": "nina", "comment": "useEffectのタイミング理解できました。" },
+    { "commentId": "CM015", "user": "oscar", "comment": "副作用ってこういうことか〜" }
+  ],
+  "902": [
+    { "commentId": "CM016", "user": "paul", "comment": "chmod 755って何度見ても忘れる笑" },
+    { "commentId": "CM017", "user": "quinn", "comment": "権限の早見表みたいなのがあると嬉しいです。" }
+  ],
+  "999": [
+    { "commentId": "CM018", "user": "riko", "comment": "docker rm は毎回怖くて確認しちゃう。" },
+    { "commentId": "CM019", "user": "shun", "comment": "安全に消す方法とかあるのかな？" }
+  ]
+}`;
 
 
 
@@ -182,9 +223,11 @@ function showDetails(kn_id){
     item_id.innerText = item_datas.id;
     item_author.innerText = item_datas.author;
     item_content.innerText = item_datas.content;
-    item_tag1.innerText = item_datas.tag1;
-    item_tag2.innerText = item_datas.tag2;
-    item_tag3.innerText = item_datas.tag3;
+    item_tag1.innerText = "#" + item_datas.tag1;
+    item_tag2.innerText = "#" + item_datas.tag2;
+    item_tag3.innerText = "#" + item_datas.tag3;
+
+    getComments(kn_id)
 
 }
 
@@ -205,6 +248,37 @@ function getRecentItems(){
     const Dummy = JSON.parse(dummyData);
     const dummy_datas = Dummy.knowledgeBase;
     return dummy_datas;
+}
+
+function getComments(id){
+  let comment_list = JSON.parse(comments);
+  console.log(comment_list)
+  let itemComment = comment_list[id];
+  console.log(itemComment)
+
+  const comment_field = document.querySelector("#comment_form");
+  comment_field.innerHTML = "";
+
+  for(let i = 0; i<itemComment.length; i++){
+    let comment_div = document.createElement("div")
+    let comment_user = document.createElement("p")
+    let comment_body = document.createElement("p")
+    let comment_id = document.createElement("p")
+
+    comment_user.innerText = itemComment[i].user;
+    comment_body.innerText = itemComment[i].comment;
+    comment_id.innerText = itemComment[i].commentId;
+
+    comment_div.setAttribute("class", "commentBody");
+    comment_user.setAttribute("class", "commentUser");
+    comment_id.setAttribute("class", "commentId");
+
+    comment_div.appendChild(comment_user);
+    comment_div.appendChild(comment_body);
+    comment_div.appendChild(comment_id);
+
+    comment_field.appendChild(comment_div)
+  }
 }
 
 getRecentItems();
