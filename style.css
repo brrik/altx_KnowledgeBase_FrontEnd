@@ -31,6 +31,10 @@ textarea{
     line-height: 30px;
 }
 
+.left_item{
+    margin-left: auto;
+}
+
 .overlay{
     display: none;
     position: fixed;

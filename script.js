@@ -155,6 +155,7 @@ function showOverlay(val){
 
 function addTable(){
     const mainTable = document.querySelector("#main")
+    mainTable.innerHTML = "";
     const recentData = getRecentItems();
     for(let i=0; i<recentData.length; i++){
         let data_item = recentData[i];
@@ -179,6 +180,42 @@ function addTable(){
         newDiv.setAttribute("class","knowledge_datas kn_frame")
 
         mainTable.appendChild(newDiv)
+    }
+}
+
+function showBookmarks(){
+    const mainTable = document.querySelector("#main")
+    mainTable.innerHTML = ""
+    const recentData = getRecentItems();
+    for(let i=0; i<recentData.length; i++){
+        let data_item = recentData[i];
+
+        let itemID = data_item.id;
+        let bookmarked_list = getLocalStorage("Bookmarks");
+
+        if(bookmarked_list.includes(itemID.toString())){
+          let newDiv = document.createElement("div");
+          newDiv.setAttribute("onclick",`showDetails(${data_item.id})`);
+          let dataID = document.createElement("p");
+          let newData = document.createElement("p");
+          let newName = document.createElement("p");
+          let delReq = document.createElement("button");
+          
+          dataID.innerText = data_item.id;
+          
+          newName.innerText = data_item.author;
+          newData.innerText = data_item.title;
+          delReq.innerText =  "削除依頼";
+          delReq.setAttribute("onclick", `delItem(event ,${data_item.id})`)
+          newDiv.appendChild(dataID);
+          newDiv.appendChild(newData);
+          newDiv.appendChild(newName);
+          newDiv.appendChild(delReq);
+
+          newDiv.setAttribute("class","knowledge_datas kn_frame")
+
+          mainTable.appendChild(newDiv)
+        }
     }
 }
 
