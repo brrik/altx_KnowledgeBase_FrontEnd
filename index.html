@@ -13,6 +13,7 @@
     </div>
     <div class="overlay">
         <div class="overlay_items" id="new_thread">
+            <img src="close_icon.png" alt="閉じる" onclick="hideOverlay()">
             <h2>ナレッジの新規投稿</h2>
             <form action="" method="post" class="form-container">
                 <div class="form-group">
@@ -42,6 +43,7 @@
     </div>
     <div class="overlay">
         <div class="overlay_items">
+            <img src="close_icon.png" alt="閉じる" onclick="hideOverlay()">
             <h2>削除依頼</h2>
             <p>以下の内容に削除依頼をしますか？</p>
             <p id="delItemID"></p>
@@ -56,7 +58,10 @@
     </div>
     <div class="overlay">
         <div class="overlay_items">
+            <img src="close_icon.png" alt="閉じる" onclick="hideOverlay()">
             <h2>ナレッジ詳細</h2>
+            <img src="" id="bookmark_button" alt="ブックマーク" onclick="">
+            <img src="" id="like_button" alt="いいね" onclick="">
             <div id="kn_detail_data" class="form-group">
                 <h3>タイトル：<span id="kn_detail_Title"></span></h3>
                 <p>ID：<span id="kn_detail_id"></span></p>

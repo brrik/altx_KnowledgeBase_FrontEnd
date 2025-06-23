@@ -5,6 +5,10 @@ body{
     background-color: slategrey;
 }
 
+img{
+    width: 30px;
+    height: 30px;
+}
 
 textarea{
     width: 80%;

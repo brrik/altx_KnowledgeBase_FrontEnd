@@ -1,3 +1,5 @@
+
+
 //ChatGPT生成のダミーデータ。一旦これでフロントはテストする
 const dummyData = `{
   "knowledgeBase": [
@@ -227,6 +229,37 @@ function showDetails(kn_id){
     item_tag2.innerText = "#" + item_datas.tag2;
     item_tag3.innerText = "#" + item_datas.tag3;
 
+    const liked_items = getLocalStorage("Likes");
+    const bookmarked_items = getLocalStorage("Bookmarks");
+
+    console.log(liked_items);
+    console.log(bookmarked_items);
+
+    const like_button = document.querySelector("#like_button");
+    const bookmark_button = document.querySelector("#bookmark_button");
+    
+    let item_id_val = item_datas.id;
+
+    if(liked_items.includes(item_id_val.toString())){
+      console.log("liked")
+      like_button.src = "like_on.png";
+      like_button.onclick = removeLike;
+    }else{
+      console.log("not liked")
+      like_button.src = "like_off.png";
+      like_button.onclick = addLike;
+    }
+
+    if(bookmarked_items.includes(item_id_val.toString())){
+      console.log("bookmarked")
+      bookmark_button.src = "bookmark_on.png";
+      bookmark_button.onclick = removeBookmark;
+    }else{
+      console.log("not bookmarked")
+      bookmark_button.src = "bookmark_off.png";
+      bookmark_button.onclick = addBookmark;
+    }
+
     getComments(kn_id)
 
 }
@@ -279,6 +312,65 @@ function getComments(id){
 
     comment_field.appendChild(comment_div)
   }
+}
+
+function addBookmark(){
+  const item_id = document.querySelector("#kn_detail_id").innerText;
+  const bookmark_button = document.querySelector("#bookmark_button");
+  addLocalStorage(item_id, "Bookmarks")
+  bookmark_button.onclick = removeBookmark;
+  bookmark_button.src = "bookmark_on.png";
+}
+
+function removeBookmark(){
+  const item_id = document.querySelector("#kn_detail_id").innerText;
+  const bookmark_button = document.querySelector("#bookmark_button");
+  removeLocalStorage(item_id, "Bookmarks")
+  bookmark_button.onclick = addBookmark;
+  bookmark_button.src = "bookmark_off.png";
+}
+
+function addLike(){
+  const item_id = document.querySelector("#kn_detail_id").innerText;
+  const like_button = document.querySelector("#like_button");
+  addLocalStorage(item_id, "Likes")
+  like_button.onclick = removeLike;
+  like_button.src = "like_on.png";
+}
+
+function removeLike(){
+  const item_id = document.querySelector("#kn_detail_id").innerText;
+  const like_button = document.querySelector("#like_button");
+  removeLocalStorage(item_id, "Likes")
+  like_button.onclick = addLike;
+  like_button.src = "like_off.png";
+}
+
+function clearLocalStorage(){
+  localStorage.clear()
+}
+
+function addLocalStorage(item, storage_name){
+  let storage_list = JSON.parse(localStorage.getItem(storage_name)) || [];
+  if(storage_list.includes(item)){
+    //do nothing
+  }else{
+    storage_list.push(item);
+    localStorage.setItem(storage_name, JSON.stringify(storage_list));
+  }
+}
+
+function removeLocalStorage(item, storage_name){
+  let storage_list = JSON.parse(localStorage.getItem(storage_name)) || [];
+  if(storage_list.includes(item)){
+    let new_storage_list = storage_list.filter(storage_item => storage_item !== item);
+    localStorage.setItem(storage_name, JSON.stringify(new_storage_list));
+  }
+}
+
+function getLocalStorage(storage_name){
+  let storage_list = JSON.parse(localStorage.getItem(storage_name)) || [];
+  return storage_list;
 }
 
 getRecentItems();
