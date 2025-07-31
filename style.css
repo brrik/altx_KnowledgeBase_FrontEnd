@@ -169,6 +169,10 @@ textarea:focus {
     margin: 3px 3px;
 }
 
+#new_post_cancel{
+    margin-top: 15px;
+}
+
 
 @media screen and (max-width: 768px) {
     body{

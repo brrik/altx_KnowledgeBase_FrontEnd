@@ -25,30 +25,30 @@
         <div class="overlay_items" id="new_thread">
             <img src="close_icon.png" alt="閉じる" onclick="hideOverlay()">
             <h2>ナレッジの新規投稿</h2>
-            <form action="" method="post" class="form-container">
+            <form id="new_knowledge" class="form-container">
                 <div class="form-group">
                     <label for="userName">投稿者(必須)</label>
-                    <input type="text" id="userName" name="userName" placeholder="大西 翔大" required>
+                    <input type="text" id="userName" name="PostedBy" placeholder="大西 翔大" required>
                     <label for="inputTitle">タイトル(必須)</label>
-                    <input type="text" id="inputTitle" name="inputTitle" placeholder="ナレッジタイトルを簡潔に" required>
+                    <input type="text" id="inputTitle" name="Title" placeholder="ナレッジタイトルを簡潔に" required>
                 </div>
                 <div class="form-group">
                     <label for="inputData">本文(必須)</label>
-                    <textarea id="inputData" name="inputData" placeholder="ナレッジベース" required></textarea>
+                    <textarea id="inputData" name="Content" placeholder="ナレッジベース" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label>タグ（任意で最大3つ）</label>
                     <div class="tag-group">
-                        <input type="text" name="tag1" placeholder="タグ1">
-                        <input type="text" name="tag2" placeholder="タグ2">
-                        <input type="text" name="tag3" placeholder="タグ3">
+                        <input type="text" name="Tag1" placeholder="タグ1">
+                        <input type="text" name="Tag2" placeholder="タグ2">
+                        <input type="text" name="Tag3" placeholder="タグ3">
                     </div>
                 </div>
 
                 <button type="submit">送信</button>
-                <button onclick="hideOverlay()">キャンセル</button>
             </form>
+            <button id="new_post_cancel" onclick="hideOverlay()">キャンセル</button>
         </div>
     </div>
     <div class="overlay">
@@ -84,7 +84,7 @@
                     <p><span id="kn_detail_tag3"></span></p>
                 </div>
             </div>
-            <form action="" method="post" class="form-container">
+            <form id="new_comment" class="form-container">
                 <div class="form-group">
                     <label for="comment_name">投稿者名</label>
                     <input type="text" id="comment_name" placeholder="投稿者名">
@@ -101,6 +101,11 @@
 
             </div>
             <button onclick="hideOverlay()">キャンセル</button>
+        </div>
+    </div>
+    <div class="overlay">
+        <div class="overlay_items">
+            <h1>Loading・・・</h1>
         </div>
     </div>
     <div id="main">

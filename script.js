@@ -410,5 +410,65 @@ function getLocalStorage(storage_name){
   return storage_list;
 }
 
+
+document.getElementById("new_knowledge").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  showOverlay(3)
+  console.log("try to send new post")
+  const endPoint = "https://altx-knowledgebase-backend.onrender.com/post-knowledge"
+
+  const form = e.target;
+  const formData = new FormData(form);
+  const jsonData = {};
+  for (const [key,value] of formData.entries()){
+    jsonData[key] = value;
+  }
+  postWithRetry(jsonData, endPoint, 3000, 10)
+})
+
+
+
+  function postWithRetry(data, url, interval = 3000, maxRetries = 5) {
+    let attempts = 0;
+
+    const tryPost = () => {
+      attempts++;
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+        return res.json();
+      })
+      .then(result => {
+        console.log('送信成功:', result);
+        alert('送信成功しました');
+        document.querySelector("#new_knowledge").reset();
+        hideOverlay();
+      })
+      .catch(err => {
+        console.warn(`⚠️ 試行 ${attempts} 回目失敗: ${err.message}`);
+        if (attempts < maxRetries) {
+          setTimeout(tryPost, interval);
+        } else {
+          alert('接続に失敗しました（最大試行回数に到達）');
+          hideOverlay();
+          showOverlay(0)
+        }
+      });
+    };
+
+    tryPost(); // 最初の試行
+  }
+
+
+
+
+
 getRecentItems();
 addTable();
