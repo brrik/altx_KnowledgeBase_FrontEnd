@@ -97,15 +97,15 @@ const dummyData = `{
 }`;
 
 const comments = `{
-  "101": [
+  "1": [
     { "commentId": "CM001", "user": "alice", "comment": "とても分かりやすかったです！" },
     { "commentId": "CM002", "user": "bob", "comment": "イベントバブリング、ずっと混乱してたので助かりました。" }
   ],
-  "234": [
+  "2": [
     { "commentId": "CM003", "user": "charlie", "comment": "実務で rebase を使うのが怖かったけど、これなら試せそう。" },
     { "commentId": "CM004", "user": "diana", "comment": "チームで共有したい内容ですね。" }
   ],
-  "387": [
+  "3": [
     { "commentId": "CM005", "user": "emma", "comment": "Python初心者におすすめの記事！" },
     { "commentId": "CM006", "user": "frank", "comment": "内包表記の例がシンプルで良いと思いました。" }
   ],
@@ -138,6 +138,7 @@ const comments = `{
   ]
 }`;
 
+const MAIN_URL = "https://altx-knowledgebase-backend.onrender.com/"
 
 
 function hideOverlay(){
@@ -153,25 +154,26 @@ function showOverlay(val){
     overlayDiv[val].style.display = "block";
 }
 
-function addTable(){
+async function addTable(){
     const mainTable = document.querySelector("#main")
     mainTable.innerHTML = "";
-    const recentData = getRecentItems();
+    const recentData = await getRecentItems();
+    console.log(recentData)
     for(let i=0; i<recentData.length; i++){
         let data_item = recentData[i];
         let newDiv = document.createElement("div");
-        newDiv.setAttribute("onclick",`showDetails(${data_item.id})`);
+        newDiv.setAttribute("onclick",`showDetails(${data_item.ID})`);
         let dataID = document.createElement("p");
         let newData = document.createElement("p");
         let newName = document.createElement("p");
         let delReq = document.createElement("button");
         
-        dataID.innerText = data_item.id;
+        dataID.innerText = data_item.ID;
         
-        newName.innerText = data_item.author;
-        newData.innerText = data_item.title;
+        newName.innerText = data_item.PostedBy;
+        newData.innerText = data_item.Title;
         delReq.innerText =  "削除依頼";
-        delReq.setAttribute("onclick", `delItem(event ,${data_item.id})`)
+        delReq.setAttribute("onclick", `delItem(event ,${data_item.ID})`)
         newDiv.appendChild(dataID);
         newDiv.appendChild(newData);
         newDiv.appendChild(newName);
@@ -245,8 +247,8 @@ function delItem(event,obj_id){
 
 }
 
-function showDetails(kn_id){
-    const item_datas = getItemFromID(kn_id);
+async function showDetails(kn_id){
+    const item_datas = await getItemFromID(kn_id);
     console.log(item_datas)
     showOverlay(2)
 
@@ -258,13 +260,13 @@ function showDetails(kn_id){
     const item_tag2 = document.querySelector("#kn_detail_tag2")
     const item_tag3 = document.querySelector("#kn_detail_tag3")
     
-    item_title.innerText = item_datas.title;
-    item_id.innerText = item_datas.id;
-    item_author.innerText = item_datas.author;
-    item_content.innerText = item_datas.content;
-    item_tag1.innerText = "#" + item_datas.tag1;
-    item_tag2.innerText = "#" + item_datas.tag2;
-    item_tag3.innerText = "#" + item_datas.tag3;
+    item_title.innerText = item_datas.Title;
+    item_id.innerText = item_datas.ID;
+    item_author.innerText = item_datas.PostedBy;
+    item_content.innerText = item_datas.Content;
+    item_tag1.innerText = "#" + item_datas.Tag1;
+    item_tag2.innerText = "#" + item_datas.Tag2;
+    item_tag3.innerText = "#" + item_datas.Tag3;
 
     const liked_items = getLocalStorage("Likes");
     const bookmarked_items = getLocalStorage("Bookmarks");
@@ -275,7 +277,7 @@ function showDetails(kn_id){
     const like_button = document.querySelector("#like_button");
     const bookmark_button = document.querySelector("#bookmark_button");
     
-    let item_id_val = item_datas.id;
+    let item_id_val = Number(item_datas.ID);
 
     if(liked_items.includes(item_id_val.toString())){
       console.log("liked")
@@ -301,23 +303,38 @@ function showDetails(kn_id){
 
 }
 
-function getItemFromID(item_id){
-    //ナレッジIDをもとに様々なデータを持ってくる関数
-    const Dummy = JSON.parse(dummyData);
-    const dummy_datas = Dummy.knowledgeBase;
-    for(let i = 0; i<dummy_datas.length; i++){
-        if(dummy_datas[i].id == item_id){
-            return dummy_datas[i];
-        }
+async function getItemFromID(item_id){
+  try {
+    // FastAPI 側のURL（ローカル実行例）
+    const response = await fetch(MAIN_URL + "items/" + item_id);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return false
+
+    // FastAPI が返す JSON を取得
+    const result = await response.json();
+    return result.data;
+  } catch (err) {
+    console.error("Error fetching items:", err);
+  }
 }
 
-function getRecentItems(){
-    //最新10件を取得する
-    const Dummy = JSON.parse(dummyData);
-    const dummy_datas = Dummy.knowledgeBase;
-    return dummy_datas;
+async function getRecentItems(){
+  try {
+    // FastAPI 側のURL（ローカル実行例）
+    const response = await fetch(MAIN_URL + "items");
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // FastAPI が返す JSON を取得
+    const result = await response.json();
+    return result.data;
+  } catch (err) {
+    console.error("Error fetching items:", err);
+  }
 }
 
 function getComments(id){
@@ -467,8 +484,4 @@ document.getElementById("new_knowledge").addEventListener("submit", async (e) =>
   }
 
 
-
-
-
-getRecentItems();
 addTable();
