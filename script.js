@@ -390,6 +390,22 @@ function addLike(){
   addLocalStorage(item_id, "Likes")
   like_button.onclick = removeLike;
   like_button.src = "like_on.png";
+
+  let url = MAIN_URL + "/nice/" + item_id
+
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("HTTPエラー " + response.status);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log("レスポンス:", data);
+    })
+    .catch(error => {
+      console.error("エラー:", error);
+    });
 }
 
 function removeLike(){
@@ -398,6 +414,23 @@ function removeLike(){
   removeLocalStorage(item_id, "Likes")
   like_button.onclick = addLike;
   like_button.src = "like_off.png";
+
+  let url = MAIN_URL + "/unlike/" + item_id
+
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("HTTPエラー " + response.status);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log("レスポンス:", data);
+    })
+    .catch(error => {
+      console.error("エラー:", error);
+    });
+
 }
 
 function clearLocalStorage(){
