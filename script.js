@@ -385,14 +385,15 @@ function removeBookmark(){
 }
 
 function addLike(){
+  console.log("add like")
   const item_id = document.querySelector("#kn_detail_id").innerText;
   const like_button = document.querySelector("#like_button");
   addLocalStorage(item_id, "Likes")
   like_button.onclick = removeLike;
   like_button.src = "like_on.png";
 
-  let url = MAIN_URL + "/nice/" + item_id
-
+  let url = MAIN_URL + "nice/" + item_id
+  console.log(url)
   fetch(url)
     .then(response => {
       if (!response.ok) {
@@ -416,7 +417,7 @@ function removeLike(){
   like_button.src = "like_off.png";
 
   let url = MAIN_URL + "/unlike/" + item_id
-
+  console.log(url)
   fetch(url)
     .then(response => {
       if (!response.ok) {
