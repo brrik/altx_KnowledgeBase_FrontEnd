@@ -337,6 +337,23 @@ async function getRecentItems(){
   }
 }
 
+async function getSearchItems(val){
+  try {
+    // FastAPI 側のURL（ローカル実行例）
+    const response = await fetch(MAIN_URL + "search/" + val);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // FastAPI が返す JSON を取得
+    const result = await response.json();
+    return result.data;
+  } catch (err) {
+    console.error("Error fetching items:", err);
+  }
+}
+
 function getComments(id){
   let comment_list = JSON.parse(comments);
   console.log(comment_list)
@@ -459,6 +476,38 @@ function removeLocalStorage(item, storage_name){
 function getLocalStorage(storage_name){
   let storage_list = JSON.parse(localStorage.getItem(storage_name)) || [];
   return storage_list;
+}
+
+async function search_item(){
+  let kw = document.querySelector("#serch_kw").value;
+  const mainTable = document.querySelector("#main")
+  mainTable.innerHTML = "";
+  const recentData = await getSearchItems(kw);
+  console.log(recentData)
+  for(let i=0; i<recentData.length; i++){
+      let data_item = recentData[i];
+      let newDiv = document.createElement("div");
+      newDiv.setAttribute("onclick",`showDetails(${data_item.ID})`);
+      let dataID = document.createElement("p");
+      let newData = document.createElement("p");
+      let newName = document.createElement("p");
+      let delReq = document.createElement("button");
+      
+      dataID.innerText = data_item.ID;
+      
+      newName.innerText = data_item.PostedBy;
+      newData.innerText = data_item.Title;
+      delReq.innerText =  "削除依頼";
+      delReq.setAttribute("onclick", `delItem(event ,${data_item.ID})`)
+      newDiv.appendChild(dataID);
+      newDiv.appendChild(newData);
+      newDiv.appendChild(newName);
+      newDiv.appendChild(delReq);
+
+      newDiv.setAttribute("class","knowledge_datas kn_frame")
+
+      mainTable.appendChild(newDiv)
+  }
 }
 
 
