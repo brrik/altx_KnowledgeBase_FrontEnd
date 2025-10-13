@@ -522,7 +522,7 @@ document.getElementById("new_knowledge").addEventListener("submit", async (e) =>
   for (const [key,value] of formData.entries()){
     jsonData[key] = value;
   }
-  postWithRetry(jsonData, endPoint, 3000, 10)
+  postWithRetry(jsonData, endPoint, "#new_knowledge", 3000, 10)
 })
 
 document.getElementById("new_comment").addEventListener("submit", async (e) => {
@@ -541,12 +541,13 @@ document.getElementById("new_comment").addEventListener("submit", async (e) => {
   let kn_id = document.getElementById("kn_detail_id").innerText;
   jsonData['KnowledgeID'] = kn_id
   console.log(jsonData)
-  postWithRetry(jsonData, endPoint, 3000, 10)
+  postWithRetry(jsonData, endPoint, "#new_comment",3000, 10)
+
 })
 
 
 
-  function postWithRetry(data, url, interval = 3000, maxRetries = 5) {
+  function postWithRetry(data, url, id_tag, interval = 3000, maxRetries = 5) {
     let attempts = 0;
 
     const tryPost = () => {
@@ -566,7 +567,7 @@ document.getElementById("new_comment").addEventListener("submit", async (e) => {
       .then(result => {
         console.log('送信成功:', result);
         alert('送信成功しました');
-        document.querySelector("#new_knowledge").reset();
+        document.querySelector(id_tag).reset();
         hideOverlay();
       })
       .catch(err => {
@@ -576,7 +577,6 @@ document.getElementById("new_comment").addEventListener("submit", async (e) => {
         } else {
           alert('接続に失敗しました（最大試行回数に到達）');
           hideOverlay();
-          showOverlay(0)
         }
       });
     };
