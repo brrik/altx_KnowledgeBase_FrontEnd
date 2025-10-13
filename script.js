@@ -248,8 +248,12 @@ function delItem(event,obj_id){
 }
 
 async function showDetails(kn_id){
-    const item_datas = await getItemFromID(kn_id);
-    console.log(item_datas)
+    const kn_datas = await getItemFromID(kn_id);
+    console.log(kn_datas)
+    const item_datas = kn_datas.knowledge;
+    const comment_datas = kn_datas.comments;
+    console.log('Datas : ' + item_datas)
+    console.log('Comments :' + comment_datas)
     showOverlay(2)
 
     const item_title = document.querySelector("#kn_detail_Title");
@@ -270,9 +274,6 @@ async function showDetails(kn_id){
 
     const liked_items = getLocalStorage("Likes");
     const bookmarked_items = getLocalStorage("Bookmarks");
-
-    console.log(liked_items);
-    console.log(bookmarked_items);
 
     const like_button = document.querySelector("#like_button");
     const bookmark_button = document.querySelector("#bookmark_button");
@@ -299,7 +300,7 @@ async function showDetails(kn_id){
       bookmark_button.onclick = addBookmark;
     }
 
-    getComments(kn_id)
+    getComments(comment_datas)
 
 }
 
@@ -314,7 +315,8 @@ async function getItemFromID(item_id){
 
     // FastAPI が返す JSON を取得
     const result = await response.json();
-    return result.data;
+    console.log(result)
+    return result;
   } catch (err) {
     console.error("Error fetching items:", err);
   }
@@ -354,10 +356,7 @@ async function getSearchItems(val){
   }
 }
 
-function getComments(id){
-  let comment_list = JSON.parse(comments);
-  console.log(comment_list)
-  let itemComment = comment_list[id];
+function getComments(itemComment){
   console.log(itemComment)
 
   const comment_field = document.querySelector("#comment_form");
@@ -369,9 +368,9 @@ function getComments(id){
     let comment_body = document.createElement("p")
     let comment_id = document.createElement("p")
 
-    comment_user.innerText = itemComment[i].user;
-    comment_body.innerText = itemComment[i].comment;
-    comment_id.innerText = itemComment[i].commentId;
+    comment_user.innerText = itemComment[i].PostedBy;
+    comment_body.innerText = itemComment[i].Content;
+    comment_id.innerText = itemComment[i].CommentID;
 
     comment_div.setAttribute("class", "commentBody");
     comment_user.setAttribute("class", "commentUser");
@@ -523,6 +522,25 @@ document.getElementById("new_knowledge").addEventListener("submit", async (e) =>
   for (const [key,value] of formData.entries()){
     jsonData[key] = value;
   }
+  postWithRetry(jsonData, endPoint, 3000, 10)
+})
+
+document.getElementById("new_comment").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  showOverlay(3)
+  console.log("try to send new comment")
+  const endPoint = "https://altx-knowledgebase-backend.onrender.com/post-comment"
+
+  const form = e.target;
+  const formData = new FormData(form);
+  const jsonData = {};
+  for (const [key,value] of formData.entries()){
+    jsonData[key] = value;
+  }
+
+  let kn_id = document.getElementById("kn_detail_id").innerText;
+  jsonData['KnowledgeID'] = kn_id
+  console.log(jsonData)
   postWithRetry(jsonData, endPoint, 3000, 10)
 })
 
